@@ -93,3 +93,20 @@ and manual GitHub Actions workflow exercise the actual three batch files and
 record HTTP health/HTML evidence. Neither has been executed on Windows here.
 No Windows runtime is available, and no emulator/system tool was installed.
 A reconciliation checklist was added; original bot formulas remain unavailable.
+
+## Windows installation repair
+
+A user screenshot showed pip unpacking a DuckDB source distribution under a very
+long nested Windows project/temp path and failing with missing-path/Long Path
+errors. The old launcher selected any latest Python and allowed source fallback.
+Setup now selects 64-bit Python 3.12, falling back to 3.11; checks existing venv
+compatibility; rejects project paths longer than 80 characters; uses prebuilt
+packages only; and preserves package-install failures. No Windows registry or
+global Python changes are made. The manual Windows workflow now covers both
+supported Python versions.
+
+Validation: 32 offline tests passed, 1 skipped (1.48 seconds). Cross-platform pip
+resolution/download of all pinned direct requirements and their dependencies
+succeeded for Windows amd64 CPython 3.11 and 3.12 using wheels only. This confirms package
+availability, not successful execution on Windows. Actual Windows launch testing
+remains outstanding.

@@ -12,9 +12,9 @@ See [progress](docs/PROGRESS.md) and [API verification](docs/API_CONTRACT.md).
 
 ## Windows: use without coding
 
-1. Install Python **3.11 or newer** from python.org if it is not already installed.
+1. Install **64-bit Python 3.12** from python.org if it is not already installed.
    Include the Python launcher (`py`). No global Python packages are needed.
-2. Extract this project into a new folder, separate from your live bot.
+2. Extract this project into a **short folder**, such as `C:\DeltaLab`, separate from your live bot. Avoid deeply nested Pictures/backup folders.
 3. Double-click **setup.bat**. It creates `.venv` and installs pinned dependencies
    inside this folder. Internet access to the Python package index is required.
 4. Double-click **start_dashboard.bat**. Leave its terminal open.
@@ -190,3 +190,21 @@ credentials. A hosted Windows runner is external to this local application.
 
 Exact strategy reconciliation inputs are listed in
 [STRATEGY_RECONCILIATION.md](docs/STRATEGY_RECONCILIATION.md).
+
+## Windows installation: DuckDB / long-path error
+
+If pip reports `No such file or directory` under `pip-install-.../duckdb...`
+and mentions Windows Long Path support, it was trying to unpack/build DuckDB
+from source in a deeply nested folder. The updated installer avoids source builds
+and selects supported 64-bit Python 3.12, falling back to 3.11. A missing compatible
+wheel now fails clearly rather than starting a compiler build.
+
+1. Download the latest project ZIP and extract it into `C:\DeltaLab`.
+2. Install **Python 3.12 — Windows installer (64-bit)** from python.org. Keep the
+   launcher enabled. You do not need to remove other Python versions.
+3. Run the new `setup.bat`, then `start_dashboard.bat`.
+
+Use a fresh extraction rather than copying an old `.venv` into the new folder.
+Virtual environments must be created in their final folder. No registry or
+system-wide long-path change is required by this fix. The installer rejects
+project paths longer than 80 characters as a conservative installation guard.
