@@ -1,0 +1,25 @@
+name: Manual Windows validation
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    env:
+      DELTA_PYTHON_VERSION: "3.12"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exercise real batch files and dashboard
+        shell: powershell
+        run: .\scripts\verify_windows.ps1
+      - name: Preserve Windows evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-validation-evidence
+          path: .cache/windows-smoke/
